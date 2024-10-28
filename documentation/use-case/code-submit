@@ -1,0 +1,40 @@
+# Atualização ou Inserção de Progresso em Desafios de Programação
+
+> ## Dados
+* ID da lição (desafio)
+* Progresso do usuário
+* Código submetido pelo usuário
+* Status da submissão
+
+> ## Fluxo primário
+1. O usuário submete o código para a lição (desafio).
+2. O sistema verifica se o usuário está autenticado.
+3. O sistema busca o progresso atual do usuário.
+4. O sistema verifica se a lição existe.
+5. O código submetido é enviado para um juiz automático que executa os casos de teste.
+6. O juiz valida a solução, verificando se os resultados do código do usuário são iguais aos esperados.
+7. O sistema registra os dados da submissão na tabela de submissão, incluindo o código, o status (sucesso ou falha), tempo de execução e outros metadados.
+8. Se o código passou em todos os casos de teste, o sistema atualiza o progresso da lição como `completed: true`.
+9. Retornar confirmação da atualização ou inserção do progresso da lição e salvar a submissão.
+
+> ## Fluxo alternativo: Desafio repetido (Prática)
+6. O sistema detecta que a lição já foi completada anteriormente.
+7. O sistema marca o progresso da lição como prática e registra a submissão como uma nova tentativa.
+8. Retornar confirmação da atualização do progresso da lição e salvar a submissão.
+
+> ## Fluxo de exceção: Falha na autenticação ou dados não encontrados
+1. Se o usuário não estiver autenticado, o sistema exibe uma mensagem de "Unauthorized" e interrompe o fluxo.
+2. Se o progresso do usuário ou a lição não forem encontrados, o sistema exibe uma mensagem de erro correspondente, como "User progress not found" ou "Lesson not found", e interrompe o fluxo.
+
+> ## Fluxo de exceção: Falha na submissão do código
+1. Se o código não passar nos casos de teste, o sistema registra a submissão com o status de "falha", juntamente com os detalhes da execução, e retorna uma mensagem de erro ao usuário, permitindo novas tentativas.
+
+> ## Tabela de Submissão
+A tabela de submissão deve incluir os seguintes campos:
+* `userId`: ID do usuário que submeteu o código.
+* `lessonId`: ID da lição (desafio) submetida.
+* `submissionCode`: Código fonte submetido pelo usuário.
+* `status`: Resultado da submissão (sucesso ou falha).
+* `executionTime`: Tempo de execução do código.
+* `testCasesPassed`: Número de casos de teste que passaram.
+* `timestamp`: Data e hora da submissão.
